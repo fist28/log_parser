@@ -6,4 +6,8 @@ class LogEntry
     @ip = ip
   end
 
+  def ==(other)
+    path == other.path &&
+      ip == other.ip
+  end
 end
