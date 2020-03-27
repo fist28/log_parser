@@ -14,17 +14,11 @@ class LogFile
   end
 
   def views
-    sorted_frequency.map do |page_frequency|
-      page, frequency = page_frequency
-      "#{page} #{frequency} views"
-    end
+    display_prepare(sorted_frequency, 'views')
   end
 
   def unique_views
-    sorted_unique_frequency.map do |page_frequency|
-      page, frequency = page_frequency
-      "#{page} #{frequency} unique views"
-    end
+    display_prepare(sorted_unique_frequency, 'unique views')
   end
 
   def to_s
@@ -35,12 +29,23 @@ class LogFile
 
   private
 
+  def display_prepare(collection, suffix = '')
+    collection.map do |page_frequency|
+      page, frequency = page_frequency
+      "#{page} #{frequency} #{suffix}"
+    end
+  end
+
   def sorted_frequency
-    @log_processor.frequency.sort { |a, b| b.last <=> a.last }
+    sort_frequency(@log_processor.frequency)
   end
 
   def sorted_unique_frequency
-    @log_processor.uniq_frequency.sort { |a, b| b.last <=> a.last }
+    sort_frequency(@log_processor.uniq_frequency)
+  end
+
+  def sort_frequency(collection)
+    collection.sort { |a, b| b.last <=> a.last }
   end
 
   def invalid_file?
