@@ -21,6 +21,10 @@ describe LogFile do
         allow_any_instance_of(LogFileProcessor).to receive(:call).and_return(true)
         expect(subject).not_to be_nil
       end
+
+      it 'return nil if file not exists' do
+        expect(subject).to be_nil
+      end
     end
   end
 
