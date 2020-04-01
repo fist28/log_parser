@@ -7,7 +7,7 @@ class LogFile
   end
 
   def call
-    return nil if invalid_file?
+    return nil unless valid_file?
 
     @log_processor.call
     true
@@ -48,7 +48,8 @@ class LogFile
     collection.sort { |a, b| b.last <=> a.last }
   end
 
-  def invalid_file?
-    file_path.nil?
+  def valid_file?
+    !file_path.nil? &&
+      File.exist?(file_path)
   end
 end

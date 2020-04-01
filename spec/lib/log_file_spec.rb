@@ -17,6 +17,8 @@ describe LogFile do
       let(:argument) { 'file.log' }
 
       it 'not return nil if argument is present' do
+        allow_any_instance_of(LogFile).to receive(:valid_file?).and_return(true)
+        allow_any_instance_of(LogFileProcessor).to receive(:call).and_return(true)
         expect(subject).not_to be_nil
       end
     end
